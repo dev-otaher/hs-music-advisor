@@ -37,31 +37,50 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        final String clientId = "f5efa89948ad4d3fba609bb84ffc9716";
         Scanner scanner = new Scanner(System.in);
         String input;
+        boolean authenticated = false;
         do {
             input = scanner.nextLine().toLowerCase();
-            switch (input) {
-                case "featured":
-                    printFeaturedPlaylists();
-                    break;
-                case "new":
-                    printNewAlbums();
-                    break;
-                case "categories":
-                    printAvailableCategories();
-                    break;
-                case "exit":
-                    System.out.println("---GOODBYE!---");
-                    break;
-                default:
-                    break;
+            if ("auth".equals(input)) {
+                authenticated = true;
             }
-            if (input.startsWith("playlists ")) {
-                String category = input.split(" ")[1];
-                printPlaylistOfCategory(category);
+            if (authenticated) {
+                switch (input) {
+                    case "featured":
+                        printFeaturedPlaylists();
+                        break;
+                    case "new":
+                        printNewAlbums();
+                        break;
+                    case "categories":
+                        printAvailableCategories();
+                        break;
+                    case "auth":
+                        printAuthLink(clientId);
+                        break;
+                    default:
+                        break;
+                }
+                if (input.startsWith("playlists ")) {
+                    String category = input.split(" ")[1];
+                    printPlaylistOfCategory(category);
+                }
+            } else {
+                System.out.println("Please, provide access for application.");
             }
         } while (!"exit".equals(input));
+        System.out.println("---GOODBYE!---");
+    }
+
+    private static void printAuthLink(String clientId) {
+        System.out.printf("https://accounts.spotify.com/authorize" +
+                          "?client_id=%s" +
+                          "&redirect_uri=http://localhost:8080&response_type=code\n"
+                , clientId
+        );
+        System.out.println("---SUCCESS---");
     }
 
     private static void printPlaylistOfCategory(String category) {
