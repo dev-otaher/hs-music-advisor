@@ -27,8 +27,8 @@ public class Main {
     static String redirectUri;
 
     static {
-        clientId = "f5efa89948ad4d3fba609bb84ffc9716";
-        clientSecret = "031281f99c52440484cb527d657e8042";
+        clientId = "";
+        clientSecret = "";
         authorizationCode = "";
         featuredPlaylists = new String[]{
                 "Mellow Morning",
